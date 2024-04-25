@@ -1,14 +1,11 @@
 package pokemon.api.standardbankpokeapi.entities;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class PokemonApiUserRequest {
-    private Integer id;
-
-    @NotEmpty(message = "{required.field}")
-    private String name;
+public class AuthenticationRequest {
 
     @NotEmpty(message = "{required.field}")
     private String email;
@@ -16,6 +13,4 @@ public class PokemonApiUserRequest {
     @NotEmpty(message = "{required.field}")
     private String password;
 
-    @NotEmpty(message = "{required.field}")
-    private String role;
 }

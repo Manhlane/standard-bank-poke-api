@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 import pokemon.api.standardbankpokeapi.entities.PokemonApiUser;
 import pokemon.api.standardbankpokeapi.entities.Role;
 import pokemon.api.standardbankpokeapi.services.PokemonUserService;
@@ -31,12 +32,18 @@ public class StandardBankPokeApiApplication {
 	}
 
 	@Bean
-	CommandLineRunner run(PokemonUserService pokemonUserService) {
+CommandLineRunner run(PokemonUserService pokemonUserService) {
 		return args -> {  // inserting data after application is up
 			pokemonUserService.save(new PokemonApiUser("James Kirk", "james@enterprise.com", "123456", Role.ADMIN));
+			pokemonUserService.save(new PokemonApiUser("Manhlane Mamabolo", "m@m.co.za", "123456", Role.ADMIN));
 			pokemonUserService.save(new PokemonApiUser("Spock", "spock@enterprise.com", "123456", Role.ADMIN));
 			pokemonUserService.save(new PokemonApiUser("Leonard McCoy", "mccoy@enterprise.com", "123456", Role.USER));
 			pokemonUserService.save(new PokemonApiUser("Montgomery Scott", "scott@enterprise.com", "123456", Role.USER));
 		};
+	}
+
+	@Bean
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 }

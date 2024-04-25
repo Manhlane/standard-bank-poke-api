@@ -40,7 +40,7 @@ public class TokenService {
         Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
         Instant expiration = generateExpirationTimeIn(10);  // expires in 10 min
         String token = JWT.create()
-                .withSubject(pokemonApiUser.getUsername())
+                .withSubject(pokemonApiUser.getEmail())
                 .withExpiresAt(expiration)
                 .withIssuer("Pokemon-API")
                 .withClaim("roles", pokemonApiUser.getRole().name())

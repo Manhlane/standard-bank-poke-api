@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -22,7 +23,7 @@ import pokemon.api.standardbankpokeapi.services.JwtAuthenticationFilter;
 @EnableWebSecurity
 @RequiredArgsConstructor
 // Annotation below to allow roles validated by methods annotations
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
@@ -37,7 +38,11 @@ public class SecurityConfiguration {
                         .requestMatchers("/","/api/**", "/api/v1/**", "/swagger-ui/**", "/api-docs", "/api-docs/**").permitAll() // white list (swagger and root entry point)
                         .requestMatchers(HttpMethod.GET, "/users").permitAll()  // white list: login and fetch users list
                         .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
-                        .requestMatchers("/pokemon-api-user").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/pokemon-api-user").authenticated()
+                        .requestMatchers("/pokemon-api-user/login").permitAll()
+                        .requestMatchers("/h2-console", "/h2-console/**").permitAll()
+                        .requestMatchers("/pokemon-information/get-pokemon/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/pokemon-information/get-list").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())

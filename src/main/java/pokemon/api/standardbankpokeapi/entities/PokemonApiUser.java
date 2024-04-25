@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "USERS")
+@Table(name = "POKEMON_API_USERS")
 public class PokemonApiUser implements UserDetails {
 
     @Id
